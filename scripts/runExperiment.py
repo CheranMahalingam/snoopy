@@ -176,6 +176,7 @@ def setupExperiment(propFile):
     remoteProjectDir = properties['remote_project_dir']
     # Source directory on the local machine (for compilation)
     localSrcDir = properties['local_src_dir']
+    remoteSrcDir = properties['remote_src_dir']
     sshKeyFile = properties["ssh_key_file"]
     gitOrigin = properties["git_origin"]
     machines = properties["machines"]
@@ -248,9 +249,9 @@ def setupExperiment(propFile):
     for suboramIps in machines["suboram_ips"]:
         allIps = allIps + suboramIps
     hosts = ["%s@%s" % (username, ip) for ip in allIps]
-    sendFileHosts(properties["github_key"], properties["username"], allIps, localSrcDir, properties["ssh_key_file"])
-    sendFileHosts(properties["github_pub_key"], properties["username"], allIps, localSrcDir, properties["ssh_key_file"])
-    ssh_key_path = os.path.join(localSrcDir, os.path.basename(properties["github_key"]))
+    sendFileHosts(properties["github_key"], properties["username"], allIps, remoteSrcDir, properties["ssh_key_file"])
+    sendFileHosts(properties["github_pub_key"], properties["username"], allIps, remoteSrcDir, properties["ssh_key_file"])
+    ssh_key_path = os.path.join(remoteSrcDir, os.path.basename(properties["github_key"]))
     with open(SSH_CONFIG_FILE, 'w') as fp:
         fp.write("Host github.com\n")
         fp.write("  Hostname github.com\n")
@@ -259,14 +260,14 @@ def setupExperiment(propFile):
     sendFileHosts(SSH_CONFIG_FILE, properties["username"], allIps, "~/.ssh/config", properties["ssh_key_file"])
 
     # Pull and build remotely
-    housekeepingCmd = "chmod 600 ~/.ssh/config; cd %s; git remote add origin %s; git stash" % (localSrcDir, "foo@bar.com")
+    housekeepingCmd = "chmod 600 ~/.ssh/config; cd %s; git remote add origin %s; git stash" % (remoteSrcDir, "foo@bar.com")
     executeParallelBlockingRemoteCommand(hosts, housekeepingCmd, sshKeyFile)
 
-    executeParallelBlockingRemoteCommand(hosts, gitSetOriginCmd(localSrcDir, gitOrigin), sshKeyFile)
+    executeParallelBlockingRemoteCommand(hosts, gitSetOriginCmd(remoteSrcDir, gitOrigin), sshKeyFile)
 
-    executeParallelBlockingRemoteCommand(hosts, gitPullCmd(localSrcDir), sshKeyFile)
+    executeParallelBlockingRemoteCommand(hosts, gitPullCmd(remoteSrcDir), sshKeyFile)
 
-    buildCmd = "cd %s/build; make -j" % localSrcDir
+    buildCmd = "cd %s/build; make -j" % remoteSrcDir
     executeParallelBlockingRemoteCommand(hosts, buildCmd, sshKeyFile)
 
     with open(propFile, 'w') as fp:

@@ -100,6 +100,9 @@ def runExperiment(propFile):
     localExpDir = Path(localProjectDir, expDir)
 
     if experimentType == "bench_sort":
+        cmd = f"cd snoopy; pip3 install -r requirements.txt; source /opt/openenclave/share/openenclave/openenclaverc"
+        executeRemoteCommand(host, cmd, key=sshKey)
+
         cmd = f"cd snoopy/scripts; python3 suboram_benchmark.py -s -t 1 > {remoteExpDir / '1.dat' }"
         executeRemoteCommand(host, cmd, key=sshKey)
         getFile(localExpDir, [suboramIp], remoteExpDir / '1.dat', key=sshKey)
