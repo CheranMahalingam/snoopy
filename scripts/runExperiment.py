@@ -51,6 +51,8 @@ def figure_to_config_file(figure):
         return "config/suboramProcessBatchThreads.json"
     if figure == "13":
         return "config/adaptiveScaleThroughputOblix.json"
+    if figure == "0":
+        return "config/test.json"
 
 def provisionExperiment(propFile, machinesFile):
     properties = loadPropertyFile(propFile)

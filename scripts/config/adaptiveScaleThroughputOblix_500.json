@@ -8,85 +8,85 @@
   "experiment_dir": "results/oblix_adaptive_scale_throughput/2021:08:18:01:43",
   "experiment_name": "oblix_adaptive_scale_throughput_500",
   "experiment_type": "adaptive",
-  "git_origin": "ucbrise/snoopy.git",
-  "github_key": "~/.ssh/id_ed25519_snoopy",
-  "github_pub_key": "~/.ssh/id_ed25519_snoopy.pub",
-  "image_path": "resourceGroups/scalable_oram/providers/Microsoft.Compute/galleries/artifact_evaluation/images/experiment_machines/versions/0.0.7",
+  "git_origin": "CheranMahalingam/snoopy.git",
+  "github_key": "~/.ssh/azure/id_ed25519_snoopy",
+  "github_pub_key": "~/.ssh/azure/id_ed25519_snoopy.pub",
+  "image_path": "resourceGroups/test-1_group_10121452/providers/Microsoft.Compute/galleries/test/images/test",
   "instance_types": {
     "balancer": "Standard_DC4s_v2",
     "client": "Standard_D16d_v4",
     "suboram": "Standard_DC4s_v2"
   },
-  "local_project_dir": "/home/azureuser/snoopy/experiments",
-  "local_src_dir": "/home/azureuser/snoopy",
+  "local_project_dir": "/home/cheranm/programming/sandbox/oram/fork/snoopy/experiments",
+  "local_src_dir": "/home/cheranm/programming/sandbox/oram/fork/snoopy",
   "location": "eastus",
   "log_folder": "log",
   "machines": {
     "balancer_ips": [
-      "40.117.249.70",
-      "40.117.249.119",
-      "40.117.252.95",
-      "40.117.253.71",
-      "40.117.253.107"
+      "52.249.248.252",
+      "52.152.230.248",
+      "52.152.231.32",
+      "52.152.231.86",
+      "52.152.231.88"
     ],
     "balancer_private_ips": [
-      "10.0.0.4",
       "10.0.0.5",
       "10.0.0.6",
       "10.0.0.7",
-      "10.0.0.8"
+      "10.0.0.8",
+      "10.0.0.9"
     ],
     "client_ips": [
-      "40.117.252.217"
+      "52.249.250.5"
     ],
     "client_private_ips": [
-      "10.0.0.9"
+      "10.0.0.4"
     ],
     "suboram_ips": [
       [
-        "40.117.248.163"
+        "52.152.231.105"
       ],
       [
-        "40.117.248.212"
+        "52.152.224.64"
       ],
       [
-        "40.117.248.228"
+        "52.152.224.72"
       ],
       [
-        "40.117.250.201"
+        "52.152.224.82"
       ],
       [
-        "40.121.2.91"
+        "52.152.224.101"
       ],
       [
-        "40.121.2.121"
+        "52.249.251.137"
       ],
       [
-        "40.121.2.185"
+        "52.152.224.107"
       ],
       [
-        "40.121.3.104"
+        "20.102.53.220"
       ],
       [
-        "40.121.4.157"
+        "13.68.243.155"
       ],
       [
-        "40.121.4.189"
+        "13.68.240.28"
       ],
       [
-        "40.121.5.158"
+        "52.152.224.148"
       ],
       [
-        "40.121.1.102"
+        "52.152.224.164"
       ],
       [
-        "40.114.122.13"
+        "52.152.224.227"
       ],
       [
-        "40.114.122.25"
+        "52.152.231.136"
       ],
       [
-        "13.90.32.243"
+        "52.152.231.181"
       ]
     ],
     "suboram_private_ips": [
@@ -208,7 +208,7 @@
   "replication_factor": 1,
   "run_name": "test",
   "sort_protocol": "bitonic_sort",
-  "ssh_key_file": "~/.ssh/scalable_oram.pem",
+  "ssh_key_file": "~/.ssh/azure/snoopy.pem",
   "ssh_key_pub": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCkRPpE2bKwHmOW/gsG1mOHcz8T7JdGlIjz3YU7/RW8sRFaikUiA240Z+1SIsw+QbHFAbyhy9+OLOLQRN8CF9/cS+DU3BKXECGJP1dkiSPVs9tk9+Gfx2TILdHnY3tD0ylFKQYftNgin6OABUsTS//DFjEYbmGSDU+DGIvWSOirByWq0sQChX/SOueFAHWE2iO+ohINoZnFwAhYmwpV2feb7J3dK6DWVyne0JpNplodvhOaFA3hCRUnrJeAPb+WUrCsTdProkMLZOV1dpqq2N++VUWv690VUxZ+gzqGo7JkG2Vh02DuQlCarQ5AmY9o6Ws4O7fUS/CJ08hPISMy6brX",
   "suboram_protocol": "oblix_protocol",
   "suboram_threads": 3,

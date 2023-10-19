@@ -66,17 +66,17 @@
   "exp_sec": 20,
   "experiment_dir": "results/scale_data/2021:08:10:21:49",
   "experiment_name": "scale_data",
-  "git_origin": "ucbrise/snoopy.git",
-  "github_key": "~/.ssh/id_ed25519_snoopy",
-  "github_pub_key": "~/.ssh/id_ed25519_snoopy.pub",
-  "image_path": "resourceGroups/scalable_oram/providers/Microsoft.Compute/galleries/artifact_evaluation/images/experiment_machines/versions/0.0.7",
+  "git_origin": "CheranMahalingam/snoopy.git",
+  "github_key": "~/.ssh/azure/id_ed25519_snoopy",
+  "github_pub_key": "~/.ssh/azure/id_ed25519_snoopy.pub",
+  "image_path": "resourceGroups/test-1_group_10121452/providers/Microsoft.Compute/galleries/test/images/test",
   "instance_types": {
     "balancer": "Standard_DC4s_v2",
     "client": "Standard_D16d_v4",
     "suboram": "Standard_DC4s_v2"
   },
-  "local_project_dir": "/home/azureuser/snoopy/experiments",
-  "local_src_dir": "/home/azureuser/snoopy",
+  "local_project_dir": "/home/cheranm/programming/sandbox/oram/fork/snoopy/experiments", 
+  "local_src_dir": "/home/cheranm/programming/sandbox/oram/fork/snoopy", 
   "location": "eastus",
   "log_folder": "log",
   "nbbalancers": [
@@ -119,7 +119,7 @@
   "replication_factor": 1,
   "run_name": "scale_data",
   "sort_protocol": "bitonic_sort",
-  "ssh_key_file": "~/.ssh/scalable_oram.pem",
+  "ssh_key_file": "~/.ssh/azure/snoopy.pem",
   "ssh_key_pub": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCkRPpE2bKwHmOW/gsG1mOHcz8T7JdGlIjz3YU7/RW8sRFaikUiA240Z+1SIsw+QbHFAbyhy9+OLOLQRN8CF9/cS+DU3BKXECGJP1dkiSPVs9tk9+Gfx2TILdHnY3tD0ylFKQYftNgin6OABUsTS//DFjEYbmGSDU+DGIvWSOirByWq0sQChX/SOueFAHWE2iO+ohINoZnFwAhYmwpV2feb7J3dK6DWVyne0JpNplodvhOaFA3hCRUnrJeAPb+WUrCsTdProkMLZOV1dpqq2N++VUWv690VUxZ+gzqGo7JkG2Vh02DuQlCarQ5AmY9o6Ws4O7fUS/CJ08hPISMy6brX",
   "suboram_ips": [
     [

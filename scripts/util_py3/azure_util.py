@@ -243,23 +243,26 @@ class AzureSetup:
                 "hardware_profile": {
                     "vm_size": instance_type
                 },
-                "os_profile": {
-                    "computer_name": vm_name,
-                    "admin_username": USERNAME,
-                    "linux_configuration": {
-                        "disablePasswordAuthentication": True,
-                        "ssh": {
-                            "public_keys": [{
-                                "path": "/home/{}/.ssh/authorized_keys".format(USERNAME),
-                                "key_data": ssh_key_data
-                            }]
-                        }
-                    }
-                },
+                # "os_profile": {
+                #     "computer_name": vm_name,
+                #     "admin_username": USERNAME,
+                #     "linux_configuration": {
+                #         "disablePasswordAuthentication": True,
+                #         "ssh": {
+                #             "public_keys": [{
+                #                 "path": "/home/{}/.ssh/authorized_keys".format(USERNAME),
+                #                 "key_data": ssh_key_data
+                #             }]
+                #         }
+                #     }
+                # },
                 "network_profile": {
                     "network_interfaces": [{
                         "id": nic_result.id,
                     }]
+                },
+                "security_profile": {
+                    "security_type": "TrustedLaunch"
                 }
             })
         #vm_result = poller.result()
