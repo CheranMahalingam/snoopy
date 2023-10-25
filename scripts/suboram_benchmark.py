@@ -100,24 +100,24 @@ def runExperiment(propFile):
     localExpDir = Path(localProjectDir, expDir)
 
     if experimentType == "bench_sort":
-        cmd = f"cd snoopy; pip3 install -r requirements.txt; source /opt/openenclave/share/openenclave/openenclaverc"
+        cmd = f"cd snoopy; source /opt/openenclave/share/openenclave/openenclaverc"
         executeRemoteCommand(host, cmd, key=sshKey)
 
         cmd = f"cd snoopy/scripts; python3 suboram_benchmark.py -s -t 1 > {remoteExpDir / '1.dat' }"
         executeRemoteCommand(host, cmd, key=sshKey)
-        getFile(localExpDir, [suboramIp], remoteExpDir / '1.dat', key=sshKey)
+        getFile(localExpDir, [host], remoteExpDir / '1.dat', key=sshKey)
 
         cmd = f"cd snoopy/scripts; python3 suboram_benchmark.py -s -t 2 > {remoteExpDir / '2.dat' }"
         executeRemoteCommand(host, cmd, key=sshKey)
-        getFile(localExpDir, [suboramIp], remoteExpDir / '2.dat', key=sshKey)
+        getFile(localExpDir, [host], remoteExpDir / '2.dat', key=sshKey)
 
         cmd = f"cd snoopy/scripts; python3 suboram_benchmark.py -s -t 3 > {remoteExpDir / '3.dat' }"
         executeRemoteCommand(host, cmd, key=sshKey)
-        getFile(localExpDir, [suboramIp], remoteExpDir / '3.dat', key=sshKey)
+        getFile(localExpDir, [host], remoteExpDir / '3.dat', key=sshKey)
 
         cmd = f"cd snoopy/scripts; python3 suboram_benchmark.py -a -t 3 > {remoteExpDir / 'adaptive.dat' }"
         executeRemoteCommand(host, cmd, key=sshKey)
-        getFile(localExpDir, [suboramIp], remoteExpDir / 'adaptive.dat', key=sshKey)
+        getFile(localExpDir, [host], remoteExpDir / 'adaptive.dat', key=sshKey)
 
         one_thread = []
         with open(localExpDir / '1.dat') as f:

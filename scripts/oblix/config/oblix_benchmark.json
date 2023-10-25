@@ -1,7 +1,7 @@
 {
   "experiment_dir": "results/oblix_benchmark/2021:08:16:23:41",
   "experiment_name": "oblix_benchmark",
-  "image_path": "resourceGroups/scalable_oram/providers/Microsoft.Compute/galleries/artifact_evaluation/images/oblix/versions/0.0.1",
+  "image_path": "resourceGroups/test-1_group_10121452/providers/Microsoft.Compute/galleries/test/images/test",
   "instance_types": {
     "oblix": "Standard_DC4s_v2"
   },
@@ -32,7 +32,7 @@
     "oblix": 1
   },
   "remote_project_dir": "/home/azureuser/snoopy/experiments",
-  "ssh_key_file": "~/.ssh/scalable_oram.pem",
-  "ssh_key_pub": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCkRPpE2bKwHmOW/gsG1mOHcz8T7JdGlIjz3YU7/RW8sRFaikUiA240Z+1SIsw+QbHFAbyhy9+OLOLQRN8CF9/cS+DU3BKXECGJP1dkiSPVs9tk9+Gfx2TILdHnY3tD0ylFKQYftNgin6OABUsTS//DFjEYbmGSDU+DGIvWSOirByWq0sQChX/SOueFAHWE2iO+ohINoZnFwAhYmwpV2feb7J3dK6DWVyne0JpNplodvhOaFA3hCRUnrJeAPb+WUrCsTdProkMLZOV1dpqq2N++VUWv690VUxZ+gzqGo7JkG2Vh02DuQlCarQ5AmY9o6Ws4O7fUS/CJ08hPISMy6brX",
+  "ssh_key_file": "~/.ssh/snoopy.pem",
+  "ssh_key_pub": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCx5txCutu4JaP7g/npbpWi+S/najyMKmH5m21IWIdsEcBAYHMLSmoK++2zbHKG3QOWIJ4YzUtvpjYa/PR1XqSj+E5Xsod9gKk6FgdU+DCmQixH4xkXXWp2KFwGZyqQ6/xc2E/hR+RJ8MwfJUqEe/RfrpQqaKxR8ZNU8mwiSiHYlE02nsklPrIlx9op/iUUqv10jG6NxiabyxlBufaowMyerWC/zugcXAqvFL9mpDdLTGoxYWQFbBucvd5AemR2XKtiMFlxFJ60fJt4cae0+6i7aFBup1FNJL52EuWt8lslUwJeShKU3DG+GYf9aa8vi8wZaXjpPmxKD1d+ke01i3SgRbGlH2jiXz+GZO4KKUagkAK7kGs/numw63SjqcQWy8EU78zQkl60R2fytkcgiWMd4bqhJYIGRbiRmkxvddOfRaXFr1/hDm538u7I0WCZEvKdPaN2WWXizhgEvrGg6nB391BDiEcndKXCLD5N/aNPUS7OVc635+mXRUqtZmCMsvU=",
   "username": "azureuser"
 }
