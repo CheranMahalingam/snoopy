@@ -101,7 +101,9 @@ def getMaxThroughputForNumBalancersWithMaxLatency(results, num_balancers, max_la
 def getMaxThroughputForNumBalancersWithMaxMeanLatency(results, num_balancers, max_latency, suborams=None):
     ret = 0
     for result in results:
+        # print(result["balancers"], num_balancers, result["50_latency"], max_latency)
         if result["balancers"] == num_balancers and result["50_latency"] <= max_latency:
+        # if result["balancers"] == num_balancers:
             if suborams is None or result["suborams"] == suborams:
                 ret = max(ret, result["throughput"])
     return ret

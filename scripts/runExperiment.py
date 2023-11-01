@@ -51,8 +51,14 @@ def figure_to_config_file(figure):
         return "config/suboramProcessBatchThreads.json"
     if figure == "13":
         return "config/adaptiveScaleThroughputOblix.json"
-    if figure == "0":
-        return "config/test.json"
+    if figure == "12a_test":
+        return "config/testSort.json"
+    if figure == "9_1000_test" or figure == "9_test":
+        return "config/testThroughput.json"
+    if figure == "9_500_test":
+        return "config/testThroughput_500.json"
+    if figure == "9_300_test":
+        return "config/testThroughput_300.json"
 
 def provisionExperiment(propFile, machinesFile):
     properties = loadPropertyFile(propFile)
@@ -568,39 +574,42 @@ def runAdaptiveExperiment(propFile):
     properties = loadPropertyFile(propFile)
     max_balancers = max(properties['nbbalancers'])
     max_suborams = max(properties['nbsuborams'])
-    experiment_bar = tqdm(total=max_balancers+max_suborams-3, position=0, desc="[Experiment progress]")
+    # experiment_bar = tqdm(total=1, position=0, desc="[Experiment progress]")
+    # experiment_bar.update(1)
+    # curr_suborams = 3
+    # curr_balancers = 1
+    runVaryBatchSzExperiment(propFile, 1, 1)
+    runVaryBatchSzExperiment(propFile, 2, 1)
     runVaryBatchSzExperiment(propFile, 3, 1)
-    experiment_bar.update(1)
-    curr_suborams = 3
-    curr_balancers = 1
-    while curr_balancers <= max_balancers and curr_suborams <= max_suborams:
-        # Try increment both
-        xput_inc_balancer = 0
-        lat_inc_balancer = float('inf')
-        xput_inc_suboram = 0
-        lat_inc_suboram = float('inf')
-        if (curr_balancers + 1 <= max_balancers):
-            xput_inc_balancer, lat_inc_balancer = runVaryBatchSzExperiment(propFile, curr_suborams, curr_balancers+1)
-        if (curr_suborams + 1 <= max_suborams):
-            xput_inc_suboram, lat_inc_suboram = runVaryBatchSzExperiment(propFile, curr_suborams+1, curr_balancers)
-        #print "\n\n\n\n\n"
-        #print "[%d balancers and %d suborams] throughput: %d, latency: %d" % (curr_balancers+1, curr_suborams, xput_inc_balancer, lat_inc_balancer)
-        #print "[%d balancers and %d suborams] throughput: %d, latency: %d" % (curr_balancers, curr_suborams+1, xput_inc_suboram, lat_inc_suboram)
-        if xput_inc_balancer > xput_inc_suboram:
-            curr_balancers += 1
-            tqdm.write("Incrementing balancers")
-        elif xput_inc_suboram > xput_inc_balancer:
-            curr_suborams += 1
-            tqdm.write("Incrementing suborams")
-        else:
-            if lat_inc_balancer < lat_inc_suboram:
-                curr_balancers += 1
-                tqdm.write("Incrementing balancers")
-            else:
-                curr_suborams += 1
-                tqdm.write("Incrementing suborams")
-        experiment_bar.update(1)
-    experiment_bar.close()
+    runVaryBatchSzExperiment(propFile, 4, 1)
+    # while curr_balancers <= max_balancers and curr_suborams <= max_suborams:
+    #     # Try increment both
+    #     xput_inc_balancer = 0
+    #     lat_inc_balancer = float('inf')
+    #     xput_inc_suboram = 0
+    #     lat_inc_suboram = float('inf')
+    #     if (curr_balancers + 1 <= max_balancers):
+    #         xput_inc_balancer, lat_inc_balancer = runVaryBatchSzExperiment(propFile, curr_suborams, curr_balancers+1)
+    #     if (curr_suborams + 1 <= max_suborams):
+    #         xput_inc_suboram, lat_inc_suboram = runVaryBatchSzExperiment(propFile, curr_suborams+1, curr_balancers)
+    #     #print "\n\n\n\n\n"
+    #     #print "[%d balancers and %d suborams] throughput: %d, latency: %d" % (curr_balancers+1, curr_suborams, xput_inc_balancer, lat_inc_balancer)
+    #     #print "[%d balancers and %d suborams] throughput: %d, latency: %d" % (curr_balancers, curr_suborams+1, xput_inc_suboram, lat_inc_suboram)
+    #     if xput_inc_balancer > xput_inc_suboram:
+    #         curr_balancers += 1
+    #         tqdm.write("Incrementing balancers")
+    #     elif xput_inc_suboram > xput_inc_balancer:
+    #         curr_suborams += 1
+    #         tqdm.write("Incrementing suborams")
+    #     else:
+    #         if lat_inc_balancer < lat_inc_suboram:
+    #             curr_balancers += 1
+    #             tqdm.write("Incrementing balancers")
+    #         else:
+    #             curr_suborams += 1
+    #             tqdm.write("Incrementing suborams")
+    #     experiment_bar.update(1)
+    # experiment_bar.close()
 
 def runExperiment(propFile):
     properties = loadPropertyFile(propFile)
@@ -829,8 +838,8 @@ def graphData(propertyFile):
 
     cmd = f'python3 {script} -b {artifactFigDir / "baselines.json"} -l -t "Artifact Evaluation" {outFile} {localExpDir / figName}'
     executeCommand(cmd)
-    cmd = f'python3 {script} -b {paperFigDir / "baselines.json"} -l -t "Paper {title}" {paperDataFile} {paperFigDir / figName}'
-    executeCommand(cmd)
+    # cmd = f'python3 {script} -b {paperFigDir / "baselines.json"} -l -t "Paper {title}" {paperDataFile} {paperFigDir / figName}'
+    # executeCommand(cmd)
     cmd = f"cp {localExpDir / figName } {artifactFigDir}"
     executeCommand(cmd)
     cmd = f"pdfjam --landscape --nup 2x1 {artifactFigDir / figName} {paperFigDir / figName} --outfile {cmpFigDir / figName}"

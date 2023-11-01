@@ -5,14 +5,14 @@
     50
   ],
   "exp_sec": 10,
-  "experiment_dir": "results/adaptive_scale_throughput_300/2021:08:12:10:07",
+  "experiment_dir": "results/adaptive_scale_throughput_300/2023:11:01:06:16",
   "experiment_name": "adaptive_scale_throughput_300",
   "experiment_type": "adaptive",
   "figure": "9",
   "git_origin": "CheranMahalingam/snoopy.git",
   "github_key": "~/.ssh/azure/id_ed25519_snoopy",
   "github_pub_key": "~/.ssh/azure/id_ed25519_snoopy.pub",
-  "image_path": "resourceGroups/test-1_group_10121452/providers/Microsoft.Compute/galleries/test/images/test",
+  "image_path": "resourceGroups/test-1_group_10121452/providers/Microsoft.Compute/galleries/test/images/test/versions/0.0.1",
   "instance_types": {
     "balancer": "Standard_DC4s_v2",
     "client": "Standard_D16d_v4",
@@ -24,117 +24,43 @@
   "log_folder": "log",
   "machines": {
     "balancer_ips": [
-      "52.249.248.252",
-      "52.152.230.248",
-      "52.152.231.32",
-      "52.152.231.86",
-      "52.152.231.88"
+      "20.231.110.197"
     ],
     "balancer_private_ips": [
-      "10.0.0.5",
-      "10.0.0.6",
-      "10.0.0.7",
-      "10.0.0.8",
-      "10.0.0.9"
+      "10.0.0.5"
     ],
     "client_ips": [
-      "52.249.250.5"
+      "20.231.110.185"
     ],
     "client_private_ips": [
       "10.0.0.4"
     ],
     "suboram_ips": [
       [
-        "52.152.231.105"
+        "20.231.110.203"
       ],
       [
-        "52.152.224.64"
+        "20.231.110.230"
       ],
       [
-        "52.152.224.72"
+        "20.231.110.253"
       ],
       [
-        "52.152.224.82"
-      ],
-      [
-        "52.152.224.101"
-      ],
-      [
-        "52.249.251.137"
-      ],
-      [
-        "52.152.224.107"
-      ],
-      [
-        "20.102.53.220"
-      ],
-      [
-        "13.68.243.155"
-      ],
-      [
-        "13.68.240.28"
-      ],
-      [
-        "52.152.224.148"
-      ],
-      [
-        "52.152.224.164"
-      ],
-      [
-        "52.152.224.227"
-      ],
-      [
-        "52.152.231.136"
-      ],
-      [
-        "52.152.231.181"
+        "20.231.111.88"
       ]
     ],
     "suboram_private_ips": [
       [
-        "10.0.0.10"
+        "10.0.0.6"
       ],
       [
-        "10.0.0.11"
+        "10.0.0.7"
       ],
       [
-        "10.0.0.12"
+        "10.0.0.8"
       ],
       [
-        "10.0.0.13"
-      ],
-      [
-        "10.0.0.14"
-      ],
-      [
-        "10.0.0.15"
-      ],
-      [
-        "10.0.0.16"
-      ],
-      [
-        "10.0.0.17"
-      ],
-      [
-        "10.0.0.18"
-      ],
-      [
-        "10.0.0.19"
-      ],
-      [
-        "10.0.0.20"
-      ],
-      [
-        "10.0.0.21"
-      ],
-      [
-        "10.0.0.22"
-      ],
-      [
-        "10.0.0.23"
-      ],
-      [
-        "10.0.0.24"
+        "10.0.0.9"
       ]
     ]
   },
@@ -142,11 +68,7 @@
   "max_latency_ms": 300,
   "min_batchsz": 100,
   "nbbalancers": [
-    1,
-    2,
-    3,
-    4,
-    5
+    1
   ],
   "nbbatchsz": [
     500,
@@ -175,26 +97,16 @@
     1,
     2,
     3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    9,
-    10,
-    11,
-    12,
-    13,
-    14,
-    15
+    4
   ],
   "num_blocks": 1024,
   "num_instances": {
-    "balancer": 5,
+    "balancer": 1,
     "client": 1,
-    "suboram": 15
+    "suboram": 4
   },
   "remote_project_dir": "/home/azureuser/snoopy/experiments",
+  "remote_src_dir": "/home/azureuser/snoopy",
   "replication_factor": 1,
   "run_name": "test",
   "sort_protocol": "bitonic_sort",
