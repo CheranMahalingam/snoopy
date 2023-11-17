@@ -326,7 +326,7 @@ void LBServerImpl::CallData::Proceed() {
         for (int i = 0; i < request_.ct_size(); i++) {
             uint8_t *ct = (uint8_t *)malloc(get_key_val_buf_sz());
             uint8_t *iv = (uint8_t *)malloc(IV_LEN);
-            uint8_t *tag = (uint8_t *)malloc(TAG_LEN);;
+            uint8_t *tag = (uint8_t *)malloc(TAG_LEN);
             memcpy(ct, request_.ct(i).c_str(), get_key_val_buf_sz());
             memcpy(iv, request_.iv(i).c_str(), IV_LEN);
             memcpy(tag, request_.tag(i).c_str(), TAG_LEN);
