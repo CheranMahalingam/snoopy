@@ -93,6 +93,8 @@ void runServer(string addr, SuboramHost &host) {
     ServerBuilder builder;
     builder.AddListeningPort(addr, grpc::InsecureServerCredentials());
     builder.RegisterService(&service);
+    builder.SetMaxReceiveMessageSize(1024*1024*400);
+    builder.SetMaxSendMessageSize(1024*1024*400);
     unique_ptr<Server> server(builder.BuildAndStart());
     printf("Started suboram server\n");
     fflush(stdout);

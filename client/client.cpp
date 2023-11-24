@@ -128,10 +128,13 @@ class OramClient {
 
 void requestThread(string target_str, int id, uint32_t secToRun, vector<vector<uint32_t>> *msLatencyLists, int batchSz, int numBlocks, chrono::steady_clock::time_point *begin_exp) {
     uint8_t block_bytes[BLOCK_LEN];
-    OramClient *client = new OramClient(grpc::CreateChannel(
-                target_str, grpc::InsecureChannelCredentials()), id);
+    grpc::ChannelArguments args;
+    args.SetMaxReceiveMessageSize(1024*1024*400);
+    args.SetMaxSendMessageSize(1024*1024*400);
+    OramClient *client = new OramClient(grpc::CreateCustomChannel(
+                target_str, grpc::InsecureChannelCredentials(), args), id);
     memset(block_bytes, 0xff, BLOCK_LEN);
-   
+
     // TODO: locking for begin_exp
     //SharedLock r_lock(*lock);
     while (*begin_exp == chrono::steady_clock::time_point::max() || chrono::duration_cast<chrono::seconds>(chrono::steady_clock::now() - *begin_exp).count() < secToRun) {
@@ -193,6 +196,7 @@ int main(int argc, char** argv)
 
     ret = 0;
 
+    cout << "BATCH SIZE " << config[BATCH_SZ] << "\n";
     for (int i = 0; i < num_threads; i++) {
         //msLatencyLists.push_back(new vector<uint32_t>);
         int index = rand() % num_balancers;

@@ -98,6 +98,8 @@ void LBServerImpl::Run(std::string server_addr) {
     ServerBuilder builder;
     builder.AddListeningPort(server_addr, grpc::InsecureServerCredentials());
     builder.RegisterService(&service_);
+    builder.SetMaxReceiveMessageSize(1024*1024*400);
+    builder.SetMaxSendMessageSize(1024*1024*400);
     cq_ = builder.AddCompletionQueue();
     server_ = builder.BuildAndStart();
     std::cout << "Server listening on " << server_addr << std::endl;
@@ -408,8 +410,10 @@ LBBatchDispatcher::LBBatchDispatcher(vector<vector<string>> suboramIPs, uint32_t
     for (int i = 0; i < suboramIPs.size(); i++) {
         dispatchers.push_back(vector<LBDispatcher*>(suboramIPs[i].size()));
         for (int j = 0; j < suboramIPs[i].size(); j++) {
-            dispatchers[i][j] = new LBDispatcher(grpc::CreateChannel(
-                           suboramIPs[i][j], grpc::InsecureChannelCredentials()), id);
+            grpc::ChannelArguments args;
+            args.SetMaxReceiveMessageSize(1024*1024*400);
+            dispatchers[i][j] = new LBDispatcher(grpc::CreateCustomChannel(
+                           suboramIPs[i][j], grpc::InsecureChannelCredentials(), args), id);
         }
     }
 }
