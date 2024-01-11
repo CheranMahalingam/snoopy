@@ -318,6 +318,7 @@ void SuboramHost::run_mock_buffered_bucket_sort() {
 
 void SuboramHost::run_process_batch(uint8_t *in_ct, uint8_t *in_iv, uint8_t *in_tag, uint8_t *out_ct, uint8_t *out_iv, uint8_t *out_tag, int batch_sz, uint32_t balancer_id) {
     if (protocol == OUR_PROTOCOL) {
+        // cout << "PROCESSING BATCH" << endl;
         std::thread host_thread([this] {
             fill_block_ct();
         });

@@ -74,9 +74,9 @@ class LBDispatcher {
     public:
         LBDispatcher(shared_ptr<Channel> channel, uint32_t id);
         int SendBatch(uint8_t *in_ct, uint8_t *in_iv, uint8_t *in_tag, uint8_t *out_ct, uint8_t *out_iv, uint8_t *out_tag, int len, bool doCopy);
+        uint32_t id_;
     private:
         unique_ptr<Oram::Stub> stub_;
-        uint32_t id_;
 };
 
 class LBBatchDispatcher {

@@ -71,6 +71,8 @@ class OramClient {
         int MakeReq(uint32_t key, uint8_t *in_data, uint8_t *out_data, int batchSz, int numBlocks) {
             OramRequest req;
             int ct_len = get_key_val_buf_sz();
+            // cout << "CTLEN " << ct_len << " " << numBlocks << endl;
+            // printf("CTLEN %d batchSz %d numBlocks %d\n", ct_len, batchSz, numBlocks);
             uint8_t *buf = (uint8_t *)malloc(ct_len);
             uint8_t iv[IV_LEN];
             uint8_t tag[TAG_LEN];
@@ -78,9 +80,13 @@ class OramClient {
                 int reqKey = rand() % (numBlocks - 1) + 1;
                 int isRead = (rand() % 2) == 0;
                 if (isRead) {
+                    // cout << "READ " << i << " " << reqKey << endl;
                     encrypt_read_key(comm_key_, buf, iv, tag, reqKey, &replay_ctr_out_, false);
+                    // count << "READ DONE " << i << endl;
                 } else {
+                    // cout << "WRITE " << i << " " << reqKey << endl;
                     encrypt_key_val(comm_key_, buf, iv, tag, reqKey, in_data, &replay_ctr_out_, false);
+                    // count << "WRITE DONE " << i << endl;
                 }
                 req.add_ct(buf, ct_len);
                 req.add_iv(iv, IV_LEN);
@@ -92,7 +98,8 @@ class OramClient {
             ClientContext ctx;
             Status status;
 
-            //printf("[C] Sending request for key %d\n", key);
+            printf("[C] Sending request for key %d\n", key);
+            // cout << "[C] Sending request for key " << key << endl;
             std::unique_ptr<ClientAsyncResponseReader<OramResponse>> rpc(stub_->AsyncAccessKey(&ctx, req, &cq_));
             rpc->Finish(&resp, &status, (void *) 1);
             void *got_tag;
@@ -107,10 +114,12 @@ class OramClient {
                         decrypt_key_val(comm_key_, &key, out_data, (const uint8_t *)resp.ct(i).c_str(), (const uint8_t *)resp.iv(i).c_str(), tag, &replay_ctr_in_, false);
                     }
                     replay_ctr_in_++;
-                    //printf("[C] Received answer for key %d\n", key);
+                    // cout << "[C] Received answer for key " << key << endl;
+                    // printf("[C] Received answer for key %d\n", key);
                     //print_bytes("Client receiving data", out_data, BLOCK_LEN);
                     return OKAY;
                 } else {
+                    // cout << "ERROR" << endl;
                     printf("[C] ERROR sending req");
                     printf(" (error code: %d, error message: %s)\n", status.error_code(), status.error_message().c_str());
                 }
@@ -131,16 +140,25 @@ void requestThread(string target_str, int id, uint32_t secToRun, vector<vector<u
     grpc::ChannelArguments args;
     args.SetMaxReceiveMessageSize(1024*1024*400);
     args.SetMaxSendMessageSize(1024*1024*400);
+    // printf("SETTING ARGS\n");
+    // cout << "SETTING ARGS" << endl;
     OramClient *client = new OramClient(grpc::CreateCustomChannel(
                 target_str, grpc::InsecureChannelCredentials(), args), id);
+
+    // printf("CREATED CLIENT\n");
+    // cout << "CREATED CLIENT" << endl;
     memset(block_bytes, 0xff, BLOCK_LEN);
+    // cout << "COPIED BLOCK BYTES" << endl;
+    // printf("COPIED BLOCK BYTES\n");
 
     // TODO: locking for begin_exp
     //SharedLock r_lock(*lock);
     while (*begin_exp == chrono::steady_clock::time_point::max() || chrono::duration_cast<chrono::seconds>(chrono::steady_clock::now() - *begin_exp).count() < secToRun) {
         //r_lock.unlock();
         chrono::steady_clock::time_point begin = chrono::steady_clock::now();
+        // cout << "MAKING REQUEST" << endl;
         client->MakeReq(id, block_bytes, block_bytes, batchSz, numBlocks);
+        // cout << "REQUEST DONE" << endl;
         chrono::steady_clock::time_point end = chrono::steady_clock::now();
         //r_lock.lock();
         if (*begin_exp != chrono::steady_clock::time_point::max() && chrono::duration_cast<chrono::seconds>(chrono::steady_clock::now() - *begin_exp).count() < secToRun) {
@@ -170,7 +188,7 @@ int main(int argc, char** argv)
     int num_balancers = config[NUM_BALANCERS];
     //ofstream file(experiment_dir + "/results.dat");
     ofstream file(experiment_dir + "/results_" + string(config[IP_ADDR]) + ".dat");
-    cout << "Writing to " << experiment_dir << "/results.dat" << endl;
+    // count << "Writing to " << experiment_dir << "/results.dat" << endl;
     vector<uint32_t> tmp;
     vector<vector<uint32_t>> msLatencyLists(config[THREADS], tmp);
     int client_id = config[CLIENT_ID];
@@ -196,7 +214,7 @@ int main(int argc, char** argv)
 
     ret = 0;
 
-    cout << "BATCH SIZE " << config[BATCH_SZ] << "\n";
+    // cout << "BATCH SIZE " << config[BATCH_SZ] << endl;
     for (int i = 0; i < num_threads; i++) {
         //msLatencyLists.push_back(new vector<uint32_t>);
         int index = rand() % num_balancers;
@@ -234,6 +252,7 @@ int main(int argc, char** argv)
     memset(block_bytes, 0, BLOCK_LEN);
     client->MakeReq(9, block_bytes, block_bytes, true);*/
 done:
+    // count << "DONE" << endl;
     debug_log::info(TLS_CLIENT " %s\n", (ret == 0) ? "success" : "failed");
     return (ret);
 }

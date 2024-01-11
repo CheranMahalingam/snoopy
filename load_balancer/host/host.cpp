@@ -153,6 +153,7 @@ void LBServerImpl::ProcessBatch() {
         reqListLock.unlock();
         return;
     }
+    // cout << "REQLIST SIZE " << reqList.size() << endl;
     debug_log::info("Processing batch\n");
 
     // TODO: actually have enclave process batch
@@ -178,7 +179,11 @@ void LBServerImpl::ProcessBatch() {
     uint8_t **client_ct_arr = (uint8_t **)malloc(num_reqs * sizeof(uint8_t *));
     uint8_t **client_iv_arr = (uint8_t **)malloc(num_reqs * sizeof(uint8_t *));
     uint8_t **client_tag_arr = (uint8_t **)malloc(num_reqs * sizeof(uint8_t *));
-    uint32_t *in_client_id_arr = (uint32_t *)malloc(num_reqs * sizeof(uint32_t));
+    uint32_t* test3 = (uint32_t *)malloc(num_reqs * sizeof(uint32_t));
+    uint32_t *in_client_id_arr = test3;
+    // if (test3 == NULL) {
+    //   cout << "TEST3" << endl;
+    // }
     set<uint32_t> client_id_set;
 
     debug_log::info("Batch: %d real_requests, %d total_requests, %d reqs_per_suboram\n", num_reqs, reqs_per_suboram*num_suborams, reqs_per_suboram);
@@ -196,7 +201,11 @@ void LBServerImpl::ProcessBatch() {
         in_client_id_arr[i] = reqList[i]->caller_->GetClientID();
         client_ct_arr[i] = (uint8_t *)malloc(pair_len);
         client_iv_arr[i] = (uint8_t *)malloc(IV_LEN);
-        client_tag_arr[i] = (uint8_t *)malloc(TAG_LEN);
+        uint8_t* test2 = (uint8_t*)malloc(TAG_LEN);
+        client_tag_arr[i] = test2;
+        // if (test2 == NULL) {
+        //   cout << "TEST2" << endl;
+        // }
         client_id_set.insert(reqList[i]->caller_->GetClientID());
     }
 
@@ -206,7 +215,11 @@ void LBServerImpl::ProcessBatch() {
         out_tag_arr[i] = (uint8_t *)malloc(TAG_LEN);
         resp_ct_arr[i] = (uint8_t *)malloc(suboram_buf_len);
         resp_iv_arr[i] = (uint8_t *)malloc(IV_LEN);
-        resp_tag_arr[i] = (uint8_t *)malloc(TAG_LEN);
+        uint8_t* test1 = (uint8_t*)malloc(TAG_LEN);
+        // if (test1 == NULL) {
+        //   cout << "TEST1" << endl;
+        // }
+        resp_tag_arr[i] = test1;
     }
     reqListLock.unlock();
 
@@ -319,6 +332,7 @@ void LBServerImpl::CallData::Proceed() {
         service_->RequestAccessKey(&ctx_, &request_, &responder_, cq_, cq_,
                 this);
     } else if (status_ == PROCESS) {
+        // cout << "RECEIVED CLIENT REQUEST" << endl;
         //uint32_t new_client_id = server->GetNextClientID();
         server->AddToCallerMap(request_.client_id(), this);
         client_id_ = request_.client_id();
@@ -328,7 +342,11 @@ void LBServerImpl::CallData::Proceed() {
         for (int i = 0; i < request_.ct_size(); i++) {
             uint8_t *ct = (uint8_t *)malloc(get_key_val_buf_sz());
             uint8_t *iv = (uint8_t *)malloc(IV_LEN);
-            uint8_t *tag = (uint8_t *)malloc(TAG_LEN);
+            uint8_t* test4 = (uint8_t *)malloc(TAG_LEN);
+            uint8_t *tag = test4;
+            // if (test4 == NULL) {
+            //   cout << "TEST4" << endl;
+            // }
             memcpy(ct, request_.ct(i).c_str(), get_key_val_buf_sz());
             memcpy(iv, request_.iv(i).c_str(), IV_LEN);
             memcpy(tag, request_.tag(i).c_str(), TAG_LEN);
@@ -399,6 +417,7 @@ int LBDispatcher::SendBatch(uint8_t *in_ct, uint8_t *in_iv, uint8_t *in_tag, uin
             memcpy(out_iv, resps.iv().c_str(), IV_LEN);
             memcpy(out_tag, resps.tag().c_str(), TAG_LEN);
         }
+        // cout << "RECEIVED RESPONSE FROM SUBORAM" << endl;
         return OKAY;
     } else {
         debug_log::error("ERROR receiving responses from suboram\n");
@@ -422,13 +441,13 @@ int LBBatchDispatcher::SendAllBatches(uint8_t **in_ct_arr, uint8_t **in_iv_arr, 
     vector<thread*> threads;
     for (int i = 0; i < dispatchers.size(); i++) {
         for (int j = 0; j < dispatchers[i].size(); j++) {
+            // cout << "SENDING BATCH" << endl;
             thread *t = new thread(&LBDispatcher::SendBatch, dispatchers[i][j],
                 in_ct_arr[i], in_iv_arr[i], in_tag_arr[i],
                 out_ct_arr[i], out_iv_arr[i], out_tag_arr[i],
                 batch_sz, j == 0);
             threads.push_back(t);
         }
-
     }
     int len = threads.size();
     for (int i = 0; i < len; i++) {
