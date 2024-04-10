@@ -11,7 +11,7 @@
 
 #define ADD_TEST_CHECKING
 
-#define BLOCK_LEN 1024
+#define BLOCK_LEN 512
 
 /* For log */
 #define TLS_CLIENT "TLS client: "
